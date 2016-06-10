@@ -28,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -281,9 +283,12 @@ public final class modeloTopComponent extends TopComponent {
         jButton15 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         arbol2 = new javax.swing.JTree();
-        jTextField2 = new javax.swing.JTextField();
-        jButton14 = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jGraficaModelo = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTableModeloGeneral = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -307,11 +312,9 @@ public final class modeloTopComponent extends TopComponent {
         jButton6 = new javax.swing.JButton();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jGraficaModelo = new javax.swing.JPanel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        jTableModeloGeneral = new javax.swing.JTable();
+        jPanel31 = new javax.swing.JPanel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton14 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -774,10 +777,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField23.setBackground(new java.awt.Color(204, 255, 204));
         jTextField23.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField23.text")); // NOI18N
         jTextField23.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField23InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField23.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -919,12 +922,12 @@ public final class modeloTopComponent extends TopComponent {
             }
         });
         jComboBox4.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-                jComboBox4PopupMenuWillBecomeVisible(evt);
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }
             public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
             }
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox4PopupMenuWillBecomeVisible(evt);
             }
         });
         jComboBox4.addItemListener(new java.awt.event.ItemListener() {
@@ -1159,12 +1162,12 @@ public final class modeloTopComponent extends TopComponent {
             }
         });
         jComboBox11.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-                jComboBox11PopupMenuWillBecomeVisible(evt);
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }
             public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
             }
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox11PopupMenuWillBecomeVisible(evt);
             }
         });
         jComboBox11.addItemListener(new java.awt.event.ItemListener() {
@@ -1215,10 +1218,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField246.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField246.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField246.text")); // NOI18N
         jTextField246.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField246InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField246.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1260,10 +1263,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField249.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField249.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField249.text")); // NOI18N
         jTextField249.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField249InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField249.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1311,10 +1314,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField252.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField252.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField252.text")); // NOI18N
         jTextField252.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField252InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField252.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1350,10 +1353,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField255.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField255.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField255.text")); // NOI18N
         jTextField255.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField255InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField255.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1389,10 +1392,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField258.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField258.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField258.text")); // NOI18N
         jTextField258.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField258InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField258.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1428,10 +1431,10 @@ public final class modeloTopComponent extends TopComponent {
         jTextField261.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jTextField261.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField261.text")); // NOI18N
         jTextField261.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField261InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField261.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1894,7 +1897,7 @@ public final class modeloTopComponent extends TopComponent {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                            .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 368, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -1968,14 +1971,74 @@ public final class modeloTopComponent extends TopComponent {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextField2.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField2.text")); // NOI18N
+        jGraficaModelo.setBackground(new java.awt.Color(204, 204, 204));
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton14, org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jButton14.text")); // NOI18N
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+        javax.swing.GroupLayout jGraficaModeloLayout = new javax.swing.GroupLayout(jGraficaModelo);
+        jGraficaModelo.setLayout(jGraficaModeloLayout);
+        jGraficaModeloLayout.setHorizontalGroup(
+            jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1200, Short.MAX_VALUE)
+        );
+        jGraficaModeloLayout.setVerticalGroup(
+            jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 299, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jGraficaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jGraficaModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jScrollPane9.setMinimumSize(new java.awt.Dimension(1200, 200));
+
+        jTableModeloGeneral.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jTableModeloGeneral.setMinimumSize(new java.awt.Dimension(1200, 200));
+        jScrollPane9.setViewportView(jTableModeloGeneral);
+        if (jTableModeloGeneral.getColumnModel().getColumnCount() > 0) {
+            jTableModeloGeneral.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title0")); // NOI18N
+            jTableModeloGeneral.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title1")); // NOI18N
+            jTableModeloGeneral.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title2")); // NOI18N
+            jTableModeloGeneral.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title3")); // NOI18N
+        }
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(224, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel10.TabConstraints.tabTitle"), jPanel10); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2178,74 +2241,27 @@ public final class modeloTopComponent extends TopComponent {
 
         jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel9.TabConstraints.tabTitle"), jPanel9); // NOI18N
 
-        jGraficaModelo.setBackground(new java.awt.Color(204, 204, 204));
-
-        javax.swing.GroupLayout jGraficaModeloLayout = new javax.swing.GroupLayout(jGraficaModelo);
-        jGraficaModelo.setLayout(jGraficaModeloLayout);
-        jGraficaModeloLayout.setHorizontalGroup(
-            jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
+        jPanel31.setLayout(jPanel31Layout);
+        jPanel31Layout.setHorizontalGroup(
+            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1203, Short.MAX_VALUE)
         );
-        jGraficaModeloLayout.setVerticalGroup(
-            jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+        jPanel31Layout.setVerticalGroup(
+            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 826, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jGraficaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jGraficaModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel31.TabConstraints.tabTitle"), jPanel31); // NOI18N
 
-        jScrollPane9.setMinimumSize(new java.awt.Dimension(1200, 200));
+        jTextField2.setText(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTextField2.text")); // NOI18N
 
-        jTableModeloGeneral.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        org.openide.awt.Mnemonics.setLocalizedText(jButton14, org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jButton14.text")); // NOI18N
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
             }
-        ));
-        jTableModeloGeneral.setMinimumSize(new java.awt.Dimension(1200, 200));
-        jScrollPane9.setViewportView(jTableModeloGeneral);
-        if (jTableModeloGeneral.getColumnModel().getColumnCount() > 0) {
-            jTableModeloGeneral.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title0")); // NOI18N
-            jTableModeloGeneral.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title1")); // NOI18N
-            jTableModeloGeneral.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title2")); // NOI18N
-            jTableModeloGeneral.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jTableModeloGeneral.columnModel.title3")); // NOI18N
-        }
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 1199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(224, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel10.TabConstraints.tabTitle"), jPanel10); // NOI18N
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton10, org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jButton10.text")); // NOI18N
 
@@ -4249,19 +4265,6 @@ public final class modeloTopComponent extends TopComponent {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         
-/*
-    // ..........................................................................................................................
-        int nIndividuos                          = Integer.valueOf(jTextField5.getText());
-        int cromosomas                       = Integer.valueOf(jTextField4.getText());
-        int generaciones                      = Integer.valueOf(jTextField6.getText());
-        int genes                                   = Integer.valueOf(jTextField3.getText());
-        double  pEmparejamiento       =Double.valueOf(jTextField7.getText());   
-        double  pMutacion                   =Double.valueOf(jTextField8.getText());
-        // .......................................................................................................................... 
-                    Runnable r = new threadCalculoPotencias(this.numDias, nIndividuos,cromosomas,generaciones,genes,pEmparejamiento,pMutacion);
-                  
-                   new Thread(r).start();  
-        */
       activarThreadPotencias();
     }//GEN-LAST:event_jButton13ActionPerformed
     // -----------------------------------------------------------------------------------------------------------------------------------------
@@ -4842,6 +4845,7 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel56;
@@ -5575,40 +5579,6 @@ public final class modeloTopComponent extends TopComponent {
         arbol2 = new JTree(modelo2);
         jScrollPane6.setViewportView(arbol2);
 
-     /*
-        DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode("Primavera-Otoño");
-        DefaultMutableTreeNode archivo1 = new DefaultMutableTreeNode("Días Laborables (L-V)");
-        DefaultMutableTreeNode archivo2 = new DefaultMutableTreeNode("Sábados");
-        DefaultMutableTreeNode archivo3 = new DefaultMutableTreeNode("Domingos y festivos");
-
-        DefaultMutableTreeNode carpeta3 = new DefaultMutableTreeNode("Verano");
-        DefaultMutableTreeNode archivo31 = new DefaultMutableTreeNode("Días Laborables (L-V)");
-        DefaultMutableTreeNode archivo32 = new DefaultMutableTreeNode("Sábados");
-        DefaultMutableTreeNode archivo33 = new DefaultMutableTreeNode("Domingos y festivos");
-
-        DefaultMutableTreeNode carpeta4 = new DefaultMutableTreeNode("Invierno");
-        DefaultMutableTreeNode archivo41 = new DefaultMutableTreeNode("Días Laborables (L-V)");
-        DefaultMutableTreeNode archivo42 = new DefaultMutableTreeNode("Sábados");
-        DefaultMutableTreeNode archivo43 = new DefaultMutableTreeNode("Domingos y festivos");
-
-       
-        modelo2.insertNodeInto(carpeta2, carpetaRaiz, 0);
-        modelo2.insertNodeInto(carpeta3, carpetaRaiz, 1);
-        modelo2.insertNodeInto(carpeta4, carpetaRaiz, 2);
-
-        modelo2.insertNodeInto(archivo1, carpeta2, 0);
-        modelo2.insertNodeInto(archivo2, carpeta2, 1);
-        modelo2.insertNodeInto(archivo3, carpeta2, 2);
-
-        modelo2.insertNodeInto(archivo31, carpeta3, 0);
-        modelo2.insertNodeInto(archivo32, carpeta3, 1);
-        modelo2.insertNodeInto(archivo33, carpeta3, 2);
-
-        modelo2.insertNodeInto(archivo41, carpeta4, 0);
-        modelo2.insertNodeInto(archivo42, carpeta4, 1);
-        modelo2.insertNodeInto(archivo43, carpeta4, 2);
-
-        */
         // ...........................................................................................................................................................
         
         DefaultMutableTreeNode carpetaRaiz2 = new DefaultMutableTreeNode("INVENTARIO");
@@ -5622,7 +5592,67 @@ public final class modeloTopComponent extends TopComponent {
         jScrollPane2.setViewportView(arbol3);
         
     }
-    // -------------------------------------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------------------
+    
+    // ----------------------------------------------------------------------------------------------------------------
+       public final void modificarArboles() {
+          
+           int i,j,k,cnt,ind=0;
+           
+           cnt = this.nLineas ;
+                      
+           System.out.println("Voy a modificar el arbol nuevo tenemos un total de puntos de:"+cnt);
+           
+           DefaultMutableTreeNode carpetaRaiz = new DefaultMutableTreeNode("INVENTARIO");
+           /**Definimos el modelo donde se agregaran los nodos*/
+           DefaultTreeModel modelo2;
+           modelo2 = new DefaultTreeModel(carpetaRaiz);
+           /**agregamos el modelo al arbol, donde previamente establecimos la raiz*/
+           
+           arbol3 = new JTree(modelo2);
+           jScrollPane2.setViewportView(arbol3);
+           
+           DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode("LINEAS ("+this.nLineas+")");     // Comenzamos con el primer punto
+           modelo2.insertNodeInto(carpeta, carpetaRaiz, 0);
+           
+          
+            for (i=0; i<this.nLineas; i++){
+              
+                    DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(i+" "+this.sLineas[i]);
+                    modelo2.insertNodeInto(archivo, carpeta, i);       
+             
+           }    
+            // ................................................................................
+           
+            arbol3.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+           
+            public void valueChanged(TreeSelectionEvent e) {
+                // se obtiene el nodo seleccionado
+                DefaultMutableTreeNode nseleccionado = (DefaultMutableTreeNode) arbol3.getLastSelectedPathComponent();
+    
+                int nivel = nseleccionado.getDepth() ;
+                System.out.println("El nivel de campo es ="+nivel);
+                
+                if ( nivel == 0) {
+                    
+                    String nodo            = nseleccionado.getUserObject().toString() ;
+                    String [] campos    = nodo.split("\\s+");
+                    int indice                = Integer.parseInt(campos[0]);
+                    
+                    System.out.println("El indice de campo es ="+indice);
+                 
+                    // actualizarFormularios(indice);                                        
+                    
+                }
+            }
+            }); 
+            
+           // ................................................................................
+            
+            
+       }
+     // ------------------------------------------------------------------------------------------------------------	
     public void cargarModeloCsv()  throws IOException {
          
         
@@ -5639,7 +5669,9 @@ public final class modeloTopComponent extends TopComponent {
         // ...........................................................................................
          mostrarArchivo(nombre);       
          procesaDatos(filename);
-       //  actualizaArbolesModelo();
+        // ...........................................................................................
+        modificarArboles();
+        // ...........................................................................................
 	    
  
     }
@@ -5688,6 +5720,10 @@ public final class modeloTopComponent extends TopComponent {
                this. nLineas    = mylbdm.nLineas -1 ;
                this.sLineas     = mylbdm.sTablaLineas ;
                  
+               
+               
+               
+               
                 
                 
                // ................................................................

@@ -34,12 +34,12 @@ public class Lbdm {
       
     // ...........................................  DEFINICIONES PÚBLICAS DE LA CLASE
     
-    public float    fTablaInventario[]                      =   new float[100] ;
-    public float    fTablaPotenciasInst[][][][]        =   new float[3][100][48][7];
-    public float    fTablaPonderaciones[][][]       =   new float[3][100][7];
-    public String   sTablaInventario[][]                =   new String[100][6] ;  
-    public String   sTablaPotenciasInst[][][]       =   new String[100][49][7];
-    public String   sTablaLineas[]                        =   new String[10] ;
+    public float    fTablaInventario[]                      =   new float[500] ;
+    public float    fTablaPotenciasInst[][][][]        =   new float[3][500][48][7];
+    public float    fTablaPonderaciones[][][]       =   new float[3][500][7];
+    public String   sTablaInventario[][]                =   new String[500][6] ;  
+    public String   sTablaPotenciasInst[][][]       =   new String[500][49][7];
+    public String   sTablaLineas[]                        =   new String[20] ;
     public String   sTablaPeriodosP3[][]             =   new String[14][24];
     public String   sTablaPeriodosP6[][]             =   new String[15][24];
     public float    fTablaCoeficientesP6[]            =   new float[6];
@@ -71,13 +71,18 @@ public class Lbdm {
         
          InitSystem myinit ;                               // Hacemos una instancia de la clase de lectura de datos desde CSV
          myinit                                 = new InitSystem();              
-         nInventario                        = myinit.leeCantidadInventario(nombre);            
-         sTablaInventario               = myinit.leeDatosCsvEntrada(nombre);      // Cargo la tabla de inventario en formato caracter
+         nInventario                        = myinit.leeCantidadInventario(nombre);                
+        
          iTablaCalendario               = myinit.leeDatosCsvCalendario(nombre);   
-         iTablaTemporadas           = myinit.leeDatosCsvTemporadas(nombre);
-      
+         iTablaTemporadas            = myinit.leeDatosCsvTemporadas(nombre);
+         
+         sTablaInventario                = myinit.leeDatosCsvEntrada(nombre);      // Cargo la tabla de inventario en formato caracter
+         
          sTablaLineas                     = myinit.sLineas ;                        // Lineas de consumo formato texto
          nLineas                              = myinit.nLineas ;                        System.out.println(" ----- TENEMOS nLineas ="+nLineas);
+         
+         
+         
                   
          // ............................... Calculamos las potencias totales y las guardamos en una lista
          

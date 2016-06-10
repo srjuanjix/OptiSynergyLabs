@@ -30,9 +30,9 @@ import java.io.IOException;
 public class InitSystem {
     
     private boolean readRecord;
-    public String sLineas[]       = new String [10] ;
-    public int nLineas               = 0 ;
-    
+    public String sLineas[]                                   = new String [20] ;
+    public int nLineas                                           = 0 ;
+  
     
     
         /**
@@ -85,7 +85,7 @@ public class InitSystem {
                    for (n=0; n< nInventario; n++){
                         tablaInventario[n][0][0] = sEntrada ; System.out.println("SEntrada="+sEntrada);
                         this.sLineas[n] = sEntrada ;
-                        
+                      
                         sEntrada    = reader.get(n);
                     }                  
                    fInicio = 2 ;                   
