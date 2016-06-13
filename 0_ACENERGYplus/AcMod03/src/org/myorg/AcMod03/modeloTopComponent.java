@@ -5603,25 +5603,26 @@ public final class modeloTopComponent extends TopComponent {
                       
            System.out.println("Voy a modificar el arbol nuevo tenemos un total de puntos de:"+cnt);
            
-           DefaultMutableTreeNode carpetaRaiz = new DefaultMutableTreeNode("INVENTARIO");
+           DefaultMutableTreeNode carpetaRaiz = new DefaultMutableTreeNode("LINEAS ("+this.nLineas+")");
            /**Definimos el modelo donde se agregaran los nodos*/
            DefaultTreeModel modelo2;
            modelo2 = new DefaultTreeModel(carpetaRaiz);
            /**agregamos el modelo al arbol, donde previamente establecimos la raiz*/
            
-           arbol3 = new JTree(modelo2);
-           jScrollPane2.setViewportView(arbol3);
-           
-           DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode("LINEAS ("+this.nLineas+")");     // Comenzamos con el primer punto
-           modelo2.insertNodeInto(carpeta, carpetaRaiz, 0);
-           
+         
+           for (i=0; i<this.nLineas; i++){
+                DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(i+"-"+ this.sLineas[i]);     // Comenzamos con el primer punto
+                modelo2.insertNodeInto(carpeta, carpetaRaiz, i);
+                
+           }   
           
-            for (i=0; i<this.nLineas; i++){
+            arbol3 = new JTree(modelo2);
+           jScrollPane2.setViewportView(arbol3);
               
-                    DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(i+" "+this.sLineas[i]);
-                    modelo2.insertNodeInto(archivo, carpeta, i);       
+            //        DefaultMutableTreeNode archivo = new DefaultMutableTreeNode();
+             //       modelo2.insertNodeInto(archivo, carpeta, i);       
              
-           }    
+          
             // ................................................................................
            
             arbol3.addTreeSelectionListener(new TreeSelectionListener() {
@@ -5717,7 +5718,7 @@ public final class modeloTopComponent extends TopComponent {
                 mylbdm = new Lbdm(sNombre);
                 // ................................................................
                 
-               this. nLineas    = mylbdm.nLineas -1 ;
+               this. nLineas    = mylbdm.nLineas ;
                this.sLineas     = mylbdm.sTablaLineas ;
                  
                

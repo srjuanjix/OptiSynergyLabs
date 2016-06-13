@@ -73,20 +73,20 @@ public class InitSystem {
              //   System.out.println("ANALIZO palabro :"+sEntrada);
                // ------------------------------------ 
                if ("INVENTARIO".equals(sEntrada)) {             
-                    nInventario =  Integer.parseInt(reader.get(1)); 
+                    nInventario =  Integer.parseInt(reader.get(1)); System.out.println("iNVENTARIO ="+nInventario);
                     fInicio = 1;                          // flag inicio activado   
                }
                // ------------------------------------     Sacamos los nombres de las líneas           
-               System.out.println(" Sacamos los nombres de las líneas   ");
+       //        System.out.println(" Sacamos los nombres de las líneas   ");
                this.nLineas = nInventario ;
                if ( nInventario > 0 && fInicio == 1 ) {  
                    boolean readRecord = reader.readRecord()   ;                   // cambiamos de registro.
-                               
+                   sEntrada    = reader.get(0);                                              // el primer registro no sirve 
                    for (n=0; n< nInventario; n++){
-                        tablaInventario[n][0][0] = sEntrada ; System.out.println("SEntrada="+sEntrada);
+                        tablaInventario[n][0][0] = sEntrada ; System.out.println(n+" -SEntrada="+sEntrada);
                         this.sLineas[n] = sEntrada ;
                       
-                        sEntrada    = reader.get(n);
+                        sEntrada    = reader.get(n+1);
                     }                  
                    fInicio = 2 ;                   
                }

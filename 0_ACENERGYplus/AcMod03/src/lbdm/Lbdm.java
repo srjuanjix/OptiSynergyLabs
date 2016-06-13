@@ -93,7 +93,7 @@ public class Lbdm {
             
              fTablaInventario[i] = cant * pot ;                     // Calculamos la potencia total de la fila
              
-             System.out.println("Calculamos potencia de fila: " + i + " es = "+(cant*pot));                      
+   //          System.out.println("Calculamos potencia de fila: " + i + " es = "+(cant*pot));                      
          }
            // ............................... Convertimos a float los perfiles medio-horarios y los guardamos en una lista
          
@@ -104,7 +104,7 @@ public class Lbdm {
                 for (j=0; j<=nInventario; j++ ) {
                     for (nDt=0; nDt<nDiasTipo; nDt++){  
                         fTablaPonderaciones[i][j][nDt]        =  Float.parseFloat(sTablaPotenciasInst[j][0][nDt]) ;  
-                            System.out.println("Calculamos ponderacion de fila: " + j + " es = "+(fTablaPonderaciones[i][j][nDt])); 
+             //               System.out.println("Calculamos ponderacion de fila: " + j + " es = "+(fTablaPonderaciones[i][j][nDt])); 
                            for (k=1; k<=48; k++) {
                                fTablaPotenciasInst[i][j][k-1][nDt] = Float.parseFloat(sTablaPotenciasInst[j][k][nDt]) ;  
                            }                   
@@ -196,7 +196,7 @@ public class Lbdm {
                     st = st + (this.fTablaPonderaciones[Qtr-1][i][nDiasTipo] * this.fTablaInventario[i] * this.fTablaPotenciasInst[Qtr-1][i][j][nDiasTipo] );
 
                 }
-                System.out.println("Calculamos potencia para j="+j+" es igual a ="+st+" kW");
+          //       System.out.println("Calculamos potencia para j="+j+" es igual a ="+st+" kW");
                 tablaRes[j] = Float.toString(st) ;
             }
         
