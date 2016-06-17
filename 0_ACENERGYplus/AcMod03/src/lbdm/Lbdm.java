@@ -52,7 +52,12 @@ public class Lbdm {
     public int      iTablaCalendario[][]                   =   new int[365][7] ;
     public int      iTablaTemporadas[][]                =  new int[12][12];
     public int      nLineas                                       = 0 ;
-    
+    public int nElementos[]                                  = new int[20];
+    public String tablaInventario[][][]                   = new String[8][5][100] ;   
+    public String  sTemporadas[]                        = new String[12] ;
+    public int nTemporadas                                 = 0 ;
+    public int nDiasTipo                                       = 0;   
+    public String sDiasTipo[]                               = new String[7] ;
      // ........................................... 
     
     
@@ -66,25 +71,30 @@ public class Lbdm {
          
         int i,j,k,cant ;
         float pot;
-        int nDiasTipo = 3 ;
+        int nDiasTipo = 0 ;
        
         
          InitSystem myinit ;                               // Hacemos una instancia de la clase de lectura de datos desde CSV
-         myinit                                 = new InitSystem();              
-         nInventario                        = myinit.leeCantidadInventario(nombre);                
+         myinit                                  = new InitSystem();              
+         nInventario                         = myinit.leeCantidadInventario(nombre);                
         
-         iTablaCalendario               = myinit.leeDatosCsvCalendario(nombre);   
-         iTablaTemporadas            = myinit.leeDatosCsvTemporadas(nombre);
+         iTablaCalendario                = myinit.leeDatosCsvCalendario(nombre);   
+         iTablaTemporadas             = myinit.leeDatosCsvTemporadas(nombre);
          
          sTablaInventario                = myinit.leeDatosCsvEntrada(nombre);      // Cargo la tabla de inventario en formato caracter
          
-         sTablaLineas                     = myinit.sLineas ;                        // Lineas de consumo formato texto
+         sTablaLineas                      = myinit.sLineas ;                        // Lineas de consumo formato texto
          nLineas                              = myinit.nLineas ;                        System.out.println(" ----- TENEMOS nLineas ="+nLineas);
-         
-         
-         
+         tablaInventario                  = myinit.tablaInventario ;
+         nElementos                       = myinit.nElementos ;
+         sTemporadas                     = myinit.sTemporadas ;
+         nTemporadas                    = myinit.nTemporadas ;
+         this.nDiasTipo                    = myinit.nDiasTipo ;
+         sDiasTipo                          = myinit.sDiasTipo ;
                   
          // ............................... Calculamos las potencias totales y las guardamos en una lista
+         
+         nDiasTipo= this.nDiasTipo ;
          
          for (i=0; i<nInventario; i++){
              
@@ -98,16 +108,18 @@ public class Lbdm {
            // ............................... Convertimos a float los perfiles medio-horarios y los guardamos en una lista
          
          int nDt =0;
+         String sStr ="";
               
             for (i=0 ; i<3; i++){        
                 sTablaPotenciasInst    = myinit.leeDatosCsvPerfilesString(i+1,nombre) ;
                 for (j=0; j<=nInventario; j++ ) {
                     for (nDt=0; nDt<nDiasTipo; nDt++){  
-                        fTablaPonderaciones[i][j][nDt]        =  Float.parseFloat(sTablaPotenciasInst[j][0][nDt]) ;  
-             //               System.out.println("Calculamos ponderacion de fila: " + j + " es = "+(fTablaPonderaciones[i][j][nDt])); 
+                        fTablaPonderaciones[i][j][nDt]        =  Float.parseFloat(sTablaPotenciasInst[j][0][nDt]) ;   sStr += " "+sTablaPotenciasInst[j][0][nDt];
+                        //  System.out.println("Calculamos ponderacion de fila: " + j + " es = "+(fTablaPonderaciones[i][j][nDt])); 
                            for (k=1; k<=48; k++) {
-                               fTablaPotenciasInst[i][j][k-1][nDt] = Float.parseFloat(sTablaPotenciasInst[j][k][nDt]) ;  
-                           }                   
+                               fTablaPotenciasInst[i][j][k-1][nDt] = Float.parseFloat(sTablaPotenciasInst[j][k][nDt]) ;  sStr += " "+sTablaPotenciasInst[j][k][nDt] ;
+                           }          
+                       //    System.out.println("dT:"+nDt+" - perfil:"+i+" - nInv:"+j+ "   ------>"+sStr);    sStr = "";
                     }
                 }
             }

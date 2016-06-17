@@ -103,12 +103,27 @@ public final class modeloTopComponent extends TopComponent {
     public double curvaPotencia[]             = {0,0,0,0,0,0,0,0,0,0,0,0};
     public double curvaPotenciaAnual[]    = new double[4380];
     public double curvasPotencias[][]       = new double[numDias][nGenes];
-    public int     nLineas                               = 0;
-    public String sLineas[]                           = new String[10];
- 
+    public int     nLineas                            = 0;
+    public String sLineas[]                        = new String[10];
+    public String   sTablaInventario[][]     =  new String[500][6] ;  
+    public  String tablaInventario[][][]      = new String[8][5][100] ;    
+    public int nElementos[]                       = new int[20];
+    public String  sTemporadas[]              = new String[12] ;
+    public int nTemporadas                       = 0 ;
+    public int nDiasTipo                             = 0;
+    public int nInventario                           = 0 ;
+    public String sDiasTipo[]                     = new String[7] ;
+  // ..........................................................
+    
+    public float    fTablaPotenciasInst[][][][]        =   new float[3][500][48][7];
+    public float    fTablaPonderaciones[][][]        =   new float[3][500][7];
+    
+    public float fCargasTeoricas[][][]          = new float[3][3][48] ;
  // ..........................................................
     
   public String sFileTxt = "" ;
+  
+  public  DefaultTableModel model;
     
    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
     public modeloTopComponent() {
@@ -287,6 +302,7 @@ public final class modeloTopComponent extends TopComponent {
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jGraficaModelo = new javax.swing.JPanel();
+        jGraficaLineas = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         jTableModeloGeneral = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
@@ -1977,10 +1993,21 @@ public final class modeloTopComponent extends TopComponent {
         jGraficaModelo.setLayout(jGraficaModeloLayout);
         jGraficaModeloLayout.setHorizontalGroup(
             jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGap(0, 597, Short.MAX_VALUE)
         );
         jGraficaModeloLayout.setVerticalGroup(
             jGraficaModeloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jGraficaLineasLayout = new javax.swing.GroupLayout(jGraficaLineas);
+        jGraficaLineas.setLayout(jGraficaLineasLayout);
+        jGraficaLineasLayout.setHorizontalGroup(
+            jGraficaLineasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 597, Short.MAX_VALUE)
+        );
+        jGraficaLineasLayout.setVerticalGroup(
+            jGraficaLineasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 299, Short.MAX_VALUE)
         );
 
@@ -1989,12 +2016,15 @@ public final class modeloTopComponent extends TopComponent {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jGraficaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jGraficaModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jGraficaLineas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jGraficaModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jGraficaLineas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jGraficaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane9.setMinimumSize(new java.awt.Dimension(1200, 200));
@@ -4692,6 +4722,7 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox jComboBox9;
+    private javax.swing.JPanel jGraficaLineas;
     private javax.swing.JPanel jGraficaModelo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -5503,7 +5534,82 @@ public final class modeloTopComponent extends TopComponent {
         jPanelGrafica03.add(j3);
         this.repaint();
          */
+        // ...........................................................................................................................................
+        Graficas migraficoModelo = new Graficas(); 
+        jGraficaModelo.removeAll();
+        //tamaño del grafico
+        Dimension d6 = jGraficaModelo.getSize();        //toma el tamaño del contenedor
 
+        // System.out.println("Dimensión del panel:" + d);
+
+        d6.setSize(600, 300);
+
+        //se crean los datos
+        
+        double[] valores6 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        String[] arg16 = {"0:00", "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30",
+            "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+            "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"};
+        String[] arg26 = {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+        String[] data6 = {"","","FU"};
+       
+        //se crea el grafico
+
+        migraficoModelo.crear_grafico_de_barras(d6, valores6, arg26, arg16, data6);
+
+        //se crea un jlabel para colocar el grafico
+        JLabel j6 = new JLabel();
+        j6.setBounds(0, 0, d6.width, d6.height);
+        //se carga el grafico de memoria
+        migraficoModelo.cargar_grafico(j6);
+        //se añade al contenedor
+
+        jGraficaModelo.add(j6);
+        this.repaint();
+          // .....................................................
+        jGraficaLineas.removeAll();
+        Dimension d7 = jGraficaLineas.getSize();
+        d7.setSize(600,300);
+        //se declara el grafico XY Lineal
+        double curvaEnergiaDiaria[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ;
+        XYDataset xydataset3 = xyDataset3(curvaEnergiaDiaria);
+       JFreeChart jfreechart3 = ChartFactory.createXYLineChart(
+        "" , "hora", "kWh",
+        xydataset3, PlotOrientation.VERTICAL,  true, true, false); // true,true, false
+
+        //personalización del grafico
+        XYPlot xyplot3 = (XYPlot) jfreechart3.getPlot();
+        xyplot3.setBackgroundPaint( Color.white );
+        xyplot3.setDomainGridlinePaint( Color.BLACK );
+        xyplot3.setRangeGridlinePaint( Color.BLACK );
+        
+        // -> Pinta Shapes en los puntos dados por el XYDataset
+        XYLineAndShapeRenderer xylineandshaperenderer3 = (XYLineAndShapeRenderer) xyplot3.getRenderer();
+        xylineandshaperenderer3.setBaseShapesVisible(false);  // true
+      
+        //--> muestra los valores de cada punto XY
+         
+        XYItemLabelGenerator xy3 = new StandardXYItemLabelGenerator();
+        xylineandshaperenderer.setBaseItemLabelGenerator( xy3 );
+        xylineandshaperenderer.setBaseItemLabelsVisible(false);
+        xylineandshaperenderer.setBaseLinesVisible(false);                       // true
+        xylineandshaperenderer.setBaseItemLabelsVisible(false);
+        //fin de personalización
+
+        //se crea la imagen y se asigna a la clase ImageIcon
+        JLabel j7 = new JLabel();
+        j7.setBounds(0, 0, d7.width, d7.height);
+        BufferedImage bufferedImage3  = jfreechart3.createBufferedImage( d7.width, d7.height);
+        
+        ImageIcon imagenFondo4 = new ImageIcon(bufferedImage3);
+        j7.setIcon(imagenFondo4);
+        j7.repaint();
+        jGraficaLineas.add(j7);
+        j7.repaint();
+        this.repaint();
+         // .....................................................
+      
+       
     }
     // -------------------------------------------------------------------------------------------------------------------------------------
 
@@ -5563,8 +5669,33 @@ public final class modeloTopComponent extends TopComponent {
 
         return xyseriescollection;
     }
-    // ------------------------------------------------------------------------------------------------------------
-    public final void crearArboles() {
+ // -------------------------------------------------------------------------------------------------------------------------------------
+
+ private XYDataset xyDataset3(double curvaPotenciaDiaria[]) {
+        int i, nTotal=0;
+        //se declaran las series y se llenan los datos
+        XYSeries sPActiva2    = new XYSeries("Energia L1");
+        XYSeries sPReactiva2 = new XYSeries("Energia L2");
+        XYSeries sPActiva4    = new XYSeries("Energia L3");
+      
+       nTotal = curvaPotenciaAnual.length ;
+       
+        for (i=0; i<48; i++) {
+                sPActiva2.add(i,curvaPotenciaDiaria[i]);
+                // System.out.println(" sPActiva.add(i,curvaPotenciaAnual["+i+"])="+ curvaPotenciaAnual[i]) ;
+                sPReactiva2.add(i, curvaPotenciaDiaria[i]/10);
+        }
+       
+        
+        XYSeriesCollection xyseriescollection = new XYSeriesCollection();
+        xyseriescollection.addSeries( sPActiva2 );
+        xyseriescollection.addSeries( sPReactiva2 );
+        xyseriescollection.addSeries( sPActiva4 );
+
+        return xyseriescollection;
+    }
+ // ------------------------------------------------------------------------------------------------------------
+ public final void crearArboles() {
 
         // System.out.println("Voy a crear el arbol CALENDARIOS  ");
 
@@ -5592,12 +5723,13 @@ public final class modeloTopComponent extends TopComponent {
         jScrollPane2.setViewportView(arbol3);
         
     }
-    // ----------------------------------------------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------------------------------------------
     
-    // ----------------------------------------------------------------------------------------------------------------
-       public final void modificarArboles() {
+ // ----------------------------------------------------------------------------------------------------------------
+ public final void modificarArboles() {
           
-           int i,j,k,cnt,ind=0;
+           int i,j,k,cnt,ind=0,eCnt=0;
+           int nElementos=0;
            
            cnt = this.nLineas ;
                       
@@ -5613,7 +5745,12 @@ public final class modeloTopComponent extends TopComponent {
            for (i=0; i<this.nLineas; i++){
                 DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(i+"-"+ this.sLineas[i]);     // Comenzamos con el primer punto
                 modelo2.insertNodeInto(carpeta, carpetaRaiz, i);
-                
+               
+                for (j=0; j<this.nElementos[i]; j++){
+                   DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode(eCnt+"-"+ this.tablaInventario[i][j][3]);     // Comenzamos con el primer punto
+                   modelo2.insertNodeInto(carpeta2, carpeta, j);
+                   eCnt ++;
+                }
            }   
           
             arbol3 = new JTree(modelo2);
@@ -5638,12 +5775,68 @@ public final class modeloTopComponent extends TopComponent {
                 if ( nivel == 0) {
                     
                     String nodo            = nseleccionado.getUserObject().toString() ;
-                    String [] campos    = nodo.split("\\s+");
+                    String [] campos    = nodo.split("-");
                     int indice                = Integer.parseInt(campos[0]);
                     
                     System.out.println("El indice de campo es ="+indice);
                  
-                    // actualizarFormularios(indice);                                        
+                    jTableModeloGeneral.getSelectionModel().setSelectionInterval(indice,indice);
+ 
+                }
+            }
+            }); 
+            
+           // ................................................................................
+           // ----------------------------------------------------------------------------------------------------------
+           
+            DefaultMutableTreeNode carpetaRaiz2 = new DefaultMutableTreeNode("TEMPORADAS ("+this.nTemporadas+")");
+           /**Definimos el modelo donde se agregaran los nodos*/
+           DefaultTreeModel modelo3;
+           modelo3 = new DefaultTreeModel(carpetaRaiz2);
+           /**agregamos el modelo al arbol, donde previamente establecimos la raiz*/
+           
+         
+           for (i=0; i<this.nTemporadas; i++){
+                DefaultMutableTreeNode carpeta3 = new DefaultMutableTreeNode(i+"-"+ this.sTemporadas[i]);     // Comenzamos con el primer punto
+                modelo3.insertNodeInto(carpeta3, carpetaRaiz2, i);
+                System.out.println("---------------->  nDiasTipo:"+this.nDiasTipo) ;
+                for (j=0; j<this.nDiasTipo; j++){
+                   DefaultMutableTreeNode carpeta4 = new DefaultMutableTreeNode(i+"-"+j+"-"+ this.sDiasTipo[j]);     // Comenzamos con el primer punto
+                   modelo3.insertNodeInto(carpeta4, carpeta3, j);          System.out.println("Intento crear: "+this.sDiasTipo[j]) ;
+                }
+                
+           }   
+          
+            arbol2 = new JTree(modelo3);
+           jScrollPane6.setViewportView(arbol2);
+              
+            //        DefaultMutableTreeNode archivo = new DefaultMutableTreeNode();
+             //       modelo2.insertNodeInto(archivo, carpeta, i);       
+             
+          
+            // ................................................................................
+           
+            arbol2.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+           
+            public void valueChanged(TreeSelectionEvent e) {
+                // se obtiene el nodo seleccionado
+                DefaultMutableTreeNode nseleccionado = (DefaultMutableTreeNode) arbol2.getLastSelectedPathComponent();
+    
+                int nivel = nseleccionado.getDepth() ;
+               
+                
+                if ( nivel == 0) {
+                    
+                    String nodo            = nseleccionado.getUserObject().toString() ;
+                    String [] campos    = nodo.split("-");
+                    int indice                = Integer.parseInt(campos[1]);
+                    int temporada        =  Integer.parseInt(campos[0]);
+                    
+                    System.out.println("El indice de temporada es ="+temporada+" - "+indice);
+                    
+                    iniciarTablas() ;
+                    actualizaTablas(temporada,indice)   ;                                 
                     
                 }
             }
@@ -5651,10 +5844,9 @@ public final class modeloTopComponent extends TopComponent {
             
            // ................................................................................
             
-            
        }
-     // ------------------------------------------------------------------------------------------------------------	
-    public void cargarModeloCsv()  throws IOException {
+ // ------------------------------------------------------------------------------------------------------------	
+ public void cargarModeloCsv()  throws IOException {
          
         
        File  nombre ;
@@ -5670,14 +5862,15 @@ public final class modeloTopComponent extends TopComponent {
         // ...........................................................................................
          mostrarArchivo(nombre);       
          procesaDatos(filename);
+         actualizaTablas(0,0);
         // ...........................................................................................
         modificarArboles();
         // ...........................................................................................
 	    
  
     }
-    // ------------------------------------------------------------------------------------------------------------	
-    private void mostrarArchivo(File abre) throws FileNotFoundException, IOException {
+ // ------------------------------------------------------------------------------------------------------------	
+ private void mostrarArchivo(File abre) throws FileNotFoundException, IOException {
             
          String aux=""; 		
 	
@@ -5710,7 +5903,7 @@ public final class modeloTopComponent extends TopComponent {
             String res2[] = new String[48];
             String res3[] = new String[48];
             
-            float fCargasTeoricas[][][] = new float[3][3][48] ;
+            
             
             // System.out.println("Voy A INICIAR LA CLASE LBDM ");
             Lbdm mylbdm ;                // Hacemos unainstancia de la clase de cálculos algoritmo lineal discreto ponderado
@@ -5718,15 +5911,19 @@ public final class modeloTopComponent extends TopComponent {
                 mylbdm = new Lbdm(sNombre);
                 // ................................................................
                 
-               this. nLineas    = mylbdm.nLineas ;
-               this.sLineas     = mylbdm.sTablaLineas ;
-                 
+               this. nLineas               = mylbdm.nLineas ;
+               this.sLineas                = mylbdm.sTablaLineas ;
+               this.sTablaInventario  = mylbdm.sTablaInventario ;  
+               this.tablaInventario     = mylbdm.tablaInventario ;
+               this.nElementos          = mylbdm.nElementos ;
+               this.sTemporadas       = mylbdm.sTemporadas;
+               this.nTemporadas       = mylbdm.nTemporadas;
+               this.nDiasTipo              = mylbdm.nDiasTipo ;
+               this.sDiasTipo              = mylbdm.sDiasTipo ;
+               this.nInventario            = mylbdm.nInventario ;
                
-               
-               
-               
-                
-                
+               this.fTablaPotenciasInst = mylbdm.fTablaPotenciasInst ;
+               this.fTablaPonderaciones=mylbdm.fTablaPonderaciones;
                // ................................................................
                // Calcula cargas teóricas perfiles por días
                 
@@ -5853,13 +6050,13 @@ private String muestraResultados(String res1[],int num,String txt)
 // ---------------------------------------------------------------------------------------------------------------------------------------------
 public void iniciarTablas() {
  
-                DefaultTableModel model;
-                model = new DefaultTableModel();                    // definimos el objeto tableModel
+             //  DefaultTableModel model;
+                this.model = new DefaultTableModel();                    // definimos el objeto tableModel
                
                 jTableModeloGeneral = new JTable();                // creamos la instancia de la tabla
-                jTableModeloGeneral.setModel(model);
+                jTableModeloGeneral.setModel(this.model);
                 
-                model.addColumn("id"); 
+                model.addColumn("p"); 
                 model.addColumn("000");  model.addColumn("003"); 
                 model.addColumn("010");  model.addColumn("013"); 
                 model.addColumn("020");  model.addColumn("023"); 
@@ -5885,7 +6082,7 @@ public void iniciarTablas() {
                 model.addColumn("220");  model.addColumn("223"); 
                 model.addColumn("230");  model.addColumn("233"); 
                 
-                TableColumn columna1 = jTableModeloGeneral.getColumn("id");
+                TableColumn columna1 = jTableModeloGeneral.getColumn("p");
                 TableColumn columna2 = jTableModeloGeneral.getColumn("000"); TableColumn columna3 = jTableModeloGeneral.getColumn("003"); 
                 TableColumn columna4 = jTableModeloGeneral.getColumn("010"); TableColumn columna5 = jTableModeloGeneral.getColumn("013"); 
                 TableColumn columna6 = jTableModeloGeneral.getColumn("020"); TableColumn columna7 = jTableModeloGeneral.getColumn("023"); 
@@ -5943,4 +6140,28 @@ public void iniciarTablas() {
                 jScrollPane9.setViewportView(jTableModeloGeneral);
         
 }
+public void actualizaTablas(int perfil,int diaTipo) {
+    int i,j ;
+    
+    Object[] fila = new Object[49];
+    for (i=0;i<this.nInventario; i++){
+             
+                 fila[0] = redondear(this.fTablaPonderaciones[perfil][i][diaTipo],2);  
+               
+                               
+                  for ( j = 0; j <48; j++)  {
+                                fila[j+1] = redondear(this.fTablaPotenciasInst[perfil][i][j][diaTipo],2);          // es para cargar los datos en filas a la tabla modelo
+                      
+                  }     
+                                  
+                  this.model.addRow(fila);                      // añadimos filas a la tabla
+    }
+    
+    jScrollPane9.setViewportView(jTableModeloGeneral);
+    
+}
+// ------------------------------------------------------------------------------------------------------------------------
+   public double redondear( double numero, int decimales ) {
+    return Math.round(numero*Math.pow(10,decimales))/Math.pow(10,decimales);
+  }
 }

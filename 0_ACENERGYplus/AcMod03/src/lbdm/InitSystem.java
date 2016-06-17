@@ -32,8 +32,14 @@ public class InitSystem {
     private boolean readRecord;
     public String sLineas[]                                   = new String [20] ;
     public int nLineas                                           = 0 ;
-  
-    
+    public  String tablaInventario[][][]                  = new String[8][5][100] ;    
+    public int nElementos[]                                  = new int[20];
+    public String  sTemporadas[]                        = new String[12] ;
+    public int nTemporadas                                 = 0 ;
+    public int nMesesTipo                                    = 0;
+    public int nDiasTipo                                       = 0;
+    public String sDiasTipo[]                               = new String[7] ;
+
     
         /**
 	 * Metodo que permite leer un archivo CSV y cargarlo en memoria el inventario convenientemente parseado
@@ -73,7 +79,7 @@ public class InitSystem {
              //   System.out.println("ANALIZO palabro :"+sEntrada);
                // ------------------------------------ 
                if ("INVENTARIO".equals(sEntrada)) {             
-                    nInventario =  Integer.parseInt(reader.get(1)); System.out.println("iNVENTARIO ="+nInventario);
+                    nInventario =  Integer.parseInt(reader.get(1)); System.out.println("INVENTARIO ="+nInventario);
                     fInicio = 1;                          // flag inicio activado   
                }
                // ------------------------------------     Sacamos los nombres de las líneas           
@@ -83,8 +89,9 @@ public class InitSystem {
                    boolean readRecord = reader.readRecord()   ;                   // cambiamos de registro.
                    sEntrada    = reader.get(0);                                              // el primer registro no sirve 
                    for (n=0; n< nInventario; n++){
-                        tablaInventario[n][0][0] = sEntrada ; System.out.println(n+" -SEntrada="+sEntrada);
-                        this.sLineas[n] = sEntrada ;
+                        tablaInventario[n][0][0] = sEntrada ; 
+                        this.sLineas[n]         = sEntrada ;
+                       System.out.println(n+" -SEntrada="+sEntrada);
                       
                         sEntrada    = reader.get(n+1);
                     }                  
@@ -97,6 +104,7 @@ public class InitSystem {
                    for ( n=0 ; n < nInventario; n++){
                        sEntrada = reader.get(0) ;
                        p = Integer.parseInt(reader.get(1)) ;               // sacamos el número de elementos
+                       this.nElementos[n] = p;                                  System.out.println("Tenemos n elementos:"+this.nElementos[n]+" para la línea: "+this.sLineas[n]);
                        for (d=0; d < p; d++){
                            readRecord = reader.readRecord()   ;                   // cambiamos de registro.
                                 
@@ -131,7 +139,7 @@ public class InitSystem {
     //        System.out.println("El contador interno marca al salir:"+intcnt);
             
             
-            
+            this.tablaInventario = tablaInventario ;                                        // pasamos a la tabla publica
             
             return tablaResultado;
         }
@@ -165,7 +173,7 @@ public class InitSystem {
            boolean readRecord   ;                  
               
             // ............................................................................ 
-          
+            
             try {
             while (reader.readRecord())
             {
@@ -382,6 +390,7 @@ public class InitSystem {
             int nMesesTipo=0 ;
             String sEntrada ="";
             int fInicio = 0 ;           // flag inicio de lectura del bloque de inventario
+            int i;
             
            System.out.println("ESTOY DENTRO LEER DATOS CALENDARIO");
             
@@ -401,6 +410,10 @@ public class InitSystem {
                // ------------------------------------ 
                if ("CALENDARIO".equals(sEntrada)) {             
                     nMesesTipo =  Integer.parseInt(reader.get(1)); 
+                    this.nDiasTipo    = Integer.parseInt(reader.get(2)) ;   System.out.println("----- numero de días tipo:"+this.nDiasTipo) ;
+                    for (i=0; i<this.nDiasTipo; i++) {
+                            this.sDiasTipo[i] = reader.get(i+3);        System.out.println("Cargo dia tipo: "+this.sDiasTipo[i]) ;
+                    }
                     fInicio = 1;    
         //            System.out.println("ANALIZO palabro : CALENDARIO, nMeses ="+nMesesTipo);
                       // flag inicio activado   
@@ -457,7 +470,13 @@ public class InitSystem {
                 // ------------------------------------ 
                if ("TEMPORADAS".equals(sEntrada)) {             
                     nTemporadas=  Integer.parseInt(reader.get(1)); 
+                    this.nTemporadas = nTemporadas ;
                     fInicio = 1;    
+               }
+               for (i=0; i<nTemporadas; i++) {
+                   
+                   this.sTemporadas[i] = reader.get(i+2) ;
+                   
                }
                // ------------------------------------     Sacamos los nombres de las líneas           
                if ( nTemporadas > 0 && fInicio == 1 ) {  
