@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,7 +53,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.openide.util.Exceptions;
+import org.openide.util.*;
 
 /**
  * Top component which displays something.
@@ -78,8 +79,10 @@ import org.openide.util.Exceptions;
     "CTL_modeloTopComponent=Modelado",
     "HINT_modeloTopComponent=This is a modelo window"
 })
-public final class modeloTopComponent extends TopComponent {
-
+public final class modeloTopComponent extends TopComponent implements LookupListener{
+    
+    // ..........................................................
+     private org.openide.util.Lookup.Result<String> result;
     // ..........................................................
     private BufferedImage _image;       //para la imagen en memoria
     private JFreeChart grafico;         // el grafico
@@ -121,9 +124,15 @@ public final class modeloTopComponent extends TopComponent {
     public float fCargasTeoricas[][][]          = new float[3][3][48] ;
  // ..........................................................
     
+    public int iTemporada                           =0 ;
+    public int iDia                                        =0 ;
+    public int iInventario                              =0 ;
+    
+  // ..........................................................
+    
   public String sFileTxt = "" ;
   
-  public  DefaultTableModel model;
+  public  DefaultTableModel model, model2,model3;
     
    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
     public modeloTopComponent() {
@@ -329,6 +338,14 @@ public final class modeloTopComponent extends TopComponent {
         jComboBox3 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jPanel31 = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTableInventario = new javax.swing.JTable();
+        jPanel32 = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jTableDatosAmpliados = new javax.swing.JTable();
+        jPanel33 = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton14 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -587,7 +604,7 @@ public final class modeloTopComponent extends TopComponent {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTextAreaArchivo = new javax.swing.JTextArea();
+        logText = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
 
         jPanel12.setBackground(new java.awt.Color(204, 255, 255));
@@ -2271,15 +2288,88 @@ public final class modeloTopComponent extends TopComponent {
 
         jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel9.TabConstraints.tabTitle"), jPanel9); // NOI18N
 
+        jTableInventario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(jTableInventario);
+
+        jTableDatosAmpliados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane11.setViewportView(jTableDatosAmpliados);
+
+        javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
+        jPanel32.setLayout(jPanel32Layout);
+        jPanel32Layout.setHorizontalGroup(
+            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+        );
+        jPanel32Layout.setVerticalGroup(
+            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel32Layout.createSequentialGroup()
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
+        jPanel33.setLayout(jPanel33Layout);
+        jPanel33Layout.setHorizontalGroup(
+            jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel33Layout.setVerticalGroup(
+            jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel44, org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jLabel44.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel45, org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jLabel45.text")); // NOI18N
+
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
         jPanel31Layout.setHorizontalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1203, Short.MAX_VALUE)
+            .addComponent(jScrollPane10)
+            .addGroup(jPanel31Layout.createSequentialGroup()
+                .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel31Layout.createSequentialGroup()
+                .addComponent(jLabel44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 418, Short.MAX_VALUE))
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 826, Short.MAX_VALUE)
+            .addGroup(jPanel31Layout.createSequentialGroup()
+                .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel45))
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 107, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel31.TabConstraints.tabTitle"), jPanel31); // NOI18N
@@ -4229,9 +4319,9 @@ public final class modeloTopComponent extends TopComponent {
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(modeloTopComponent.class, "modeloTopComponent.jPanel25.TabConstraints.tabTitle"), jPanel25); // NOI18N
 
-        jTextAreaArchivo.setColumns(20);
-        jTextAreaArchivo.setRows(5);
-        jScrollPane7.setViewportView(jTextAreaArchivo);
+        logText.setColumns(20);
+        logText.setRows(5);
+        jScrollPane7.setViewportView(logText);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -4838,6 +4928,8 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel54;
@@ -4877,6 +4969,8 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel56;
@@ -4904,6 +4998,8 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JPanel jPanelGrafica02;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane15;
@@ -4926,11 +5022,12 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTableDatosAmpliados;
+    private javax.swing.JTable jTableInventario;
     private javax.swing.JTable jTableModeloGeneral;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextArea6;
-    private javax.swing.JTextArea jTextAreaArchivo;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -5110,6 +5207,7 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JTextField jTextField73;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextArea logText;
     private javax.swing.JScrollPane miBarra13;
     private javax.swing.JScrollPane miBarra14;
     private javax.swing.JScrollPane miBarra15;
@@ -5123,14 +5221,15 @@ public final class modeloTopComponent extends TopComponent {
     private javax.swing.JPanel pGrafico03;
     private javax.swing.JTextField tfGeneracion;
     // End of variables declaration//GEN-END:variables
-    @Override
+     @Override
     public void componentOpened() {
-        // TODO add custom code on component opening
+        result = org.openide.util.Utilities.actionsGlobalContext().lookupResult(String.class);
+        result.addLookupListener(this);
     }
 
     @Override
     public void componentClosed() {
-        // TODO add custom code on component closing
+       result.removeLookupListener(this);
     }
 
     void writeProperties(java.util.Properties p) {
@@ -5535,6 +5634,17 @@ public final class modeloTopComponent extends TopComponent {
         this.repaint();
          */
         // ...........................................................................................................................................
+         
+       
+    }
+     // -------------------------------------------------------------------------------------------------------------------------------------
+    public void activarGraficasModelo(double curvaEnergiaDiaria[]) {
+
+        // ...........................................................................................................................................
+        Graficas migrafico = new Graficas(); //aqui debe de ir esta linea de programacion
+
+   
+        // ...........................................................................................................................................
         Graficas migraficoModelo = new Graficas(); 
         jGraficaModelo.removeAll();
         //tamaño del grafico
@@ -5546,10 +5656,11 @@ public final class modeloTopComponent extends TopComponent {
 
         //se crean los datos
         
-        double[] valores6 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        String[] arg16 = {"0:00", "0:30", "1:00", "1:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30",
-            "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-            "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"};
+        
+        double[] valores6 = curvaEnergiaDiaria ;
+        String[] arg16 = {"0", "030", "1", "130", "2", "230", "3", "330", "4", "430", "5", "530", "6", "630", "7", "730", "8", "830",
+            "9", "930", "10", "1030", "11", "1130", "12", "1230", "13", "1330", "14", "1430", "15", "1530", "16", "1630",
+            "17", "1730", "18", "1830", "19", "1930", "20", "2030", "21", "2130", "22", "2230", "23", "2330"};
         String[] arg26 = {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
         String[] data6 = {"","","FU"};
        
@@ -5571,7 +5682,7 @@ public final class modeloTopComponent extends TopComponent {
         Dimension d7 = jGraficaLineas.getSize();
         d7.setSize(600,300);
         //se declara el grafico XY Lineal
-        double curvaEnergiaDiaria[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ;
+   //     double curvaEnergiaDiaria[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ;
         XYDataset xydataset3 = xyDataset3(curvaEnergiaDiaria);
        JFreeChart jfreechart3 = ChartFactory.createXYLineChart(
         "" , "hora", "kWh",
@@ -5590,10 +5701,10 @@ public final class modeloTopComponent extends TopComponent {
         //--> muestra los valores de cada punto XY
          
         XYItemLabelGenerator xy3 = new StandardXYItemLabelGenerator();
-        xylineandshaperenderer.setBaseItemLabelGenerator( xy3 );
-        xylineandshaperenderer.setBaseItemLabelsVisible(false);
-        xylineandshaperenderer.setBaseLinesVisible(false);                       // true
-        xylineandshaperenderer.setBaseItemLabelsVisible(false);
+        xylineandshaperenderer3.setBaseItemLabelGenerator( xy3 );
+        xylineandshaperenderer3.setBaseItemLabelsVisible(false);
+        xylineandshaperenderer3.setBaseLinesVisible(false);                       // true
+        xylineandshaperenderer3.setBaseItemLabelsVisible(false);
         //fin de personalización
 
         //se crea la imagen y se asigna a la clase ImageIcon
@@ -5674,23 +5785,30 @@ public final class modeloTopComponent extends TopComponent {
  private XYDataset xyDataset3(double curvaPotenciaDiaria[]) {
         int i, nTotal=0;
         //se declaran las series y se llenan los datos
-        XYSeries sPActiva2    = new XYSeries("Energia L1");
-        XYSeries sPReactiva2 = new XYSeries("Energia L2");
-        XYSeries sPActiva4    = new XYSeries("Energia L3");
+        XYSeries E1    = new XYSeries("Energia L1");
+        XYSeries E2    = new XYSeries("Energia L2");
+        XYSeries E3    = new XYSeries("Energia L3");
+        XYSeries E4    = new XYSeries("Energia L4");
+        XYSeries E5    = new XYSeries("Energia L5");
       
        nTotal = curvaPotenciaAnual.length ;
        
         for (i=0; i<48; i++) {
-                sPActiva2.add(i,curvaPotenciaDiaria[i]);
-                // System.out.println(" sPActiva.add(i,curvaPotenciaAnual["+i+"])="+ curvaPotenciaAnual[i]) ;
-                sPReactiva2.add(i, curvaPotenciaDiaria[i]/10);
+                E1.add(i,curvaPotenciaDiaria[i]);              
+                E2.add(i, curvaPotenciaDiaria[i]/10);
         }
        
         
         XYSeriesCollection xyseriescollection = new XYSeriesCollection();
-        xyseriescollection.addSeries( sPActiva2 );
-        xyseriescollection.addSeries( sPReactiva2 );
-        xyseriescollection.addSeries( sPActiva4 );
+        xyseriescollection.addSeries( E1 );
+        xyseriescollection.addSeries( E2 );
+        xyseriescollection.addSeries( E3 );
+        xyseriescollection.addSeries( E4 );
+        xyseriescollection.addSeries( E5 );
+ 
+ 
+ 
+ 
 
         return xyseriescollection;
     }
@@ -5781,6 +5899,21 @@ public final class modeloTopComponent extends TopComponent {
                     System.out.println("El indice de campo es ="+indice);
                  
                     jTableModeloGeneral.getSelectionModel().setSelectionInterval(indice,indice);
+                    if (nivel != 0 ) {
+                        double curvaEnergiaDiaria[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} ;
+                        activarGraficasModelo(curvaEnergiaDiaria) ;
+                        actualizarIndiceInventario(0)  ;
+                       
+                    } else {
+                    
+                        actualizarIndiceInventario(indice) ;
+                        double curvaEnergiaDiaria[] = new double[48] ;
+                    
+                        curvaEnergiaDiaria = actualizarArrayGrafica() ;
+                        activarGraficasModelo(curvaEnergiaDiaria) ;
+                    }
+                    
+                    
  
                 }
             }
@@ -5837,7 +5970,7 @@ public final class modeloTopComponent extends TopComponent {
                     
                     iniciarTablas() ;
                     actualizaTablas(temporada,indice)   ;                                 
-                    
+              
                 }
             }
             }); 
@@ -5887,7 +6020,7 @@ public final class modeloTopComponent extends TopComponent {
 
                 lee.close();
 	 	} 
-                jTextAreaArchivo.setText(this.sFileTxt);
+                logText.setText(this.sFileTxt);
         return ;
 }
  // ---------------------------------------------------------------------------------------------------------------------------------------------	
@@ -6019,7 +6152,7 @@ public final class modeloTopComponent extends TopComponent {
                 } 
                 
                  this.sFileTxt += txt ;
-                 jTextAreaArchivo.setText(this.sFileTxt);
+                 logText.setText(this.sFileTxt);
                 
                 /*
                 String res4[] = mylbdm.CalculaCargasCuartoHorarias();
@@ -6138,11 +6271,49 @@ public void iniciarTablas() {
                 jTableModeloGeneral.getTableHeader().setReorderingAllowed(false);
                 
                 jScrollPane9.setViewportView(jTableModeloGeneral);
+        // ----------------------------------------------------------------------------------------------------------------------------
+        
+        
+                this.model2 = new DefaultTableModel();                    // definimos el objeto tableModel
+               
+                jTableInventario = new JTable();                // creamos la instancia de la tabla
+                jTableInventario.setModel(this.model2);
+                
+                model2.addColumn("id"); 
+                model2.addColumn("EDIFICIO"); 
+                model2.addColumn("ZONA");  model2.addColumn("LOCAL"); 
+                model2.addColumn("DENOMINACIÓN");  model2.addColumn("CANTIDAD"); 
+                model2.addColumn("P.N.ELC (W)");  model2.addColumn("P.N.TERM (W)"); 
+                model2.addColumn("");  model2.addColumn(""); 
+                
+                jTableModeloGeneral.getTableHeader().setReorderingAllowed(false);
+                
+                jScrollPane10.setViewportView(jTableInventario);
+        
+         // ----------------------------------------------------------------------------------------------------------------------------
+        
+        
+                this.model3 = new DefaultTableModel();                    // definimos el objeto tableModel
+               
+                jTableDatosAmpliados= new JTable();                // creamos la instancia de la tabla
+                jTableDatosAmpliados.setModel(this.model3);
+                
+                model3.addColumn("DATO"); 
+                model3.addColumn("VALOR"); 
+                               
+                jTableDatosAmpliados.getTableHeader().setReorderingAllowed(false);
+                
+                jScrollPane11.setViewportView(jTableDatosAmpliados);
+        
         
 }
 public void actualizaTablas(int perfil,int diaTipo) {
     int i,j ;
     
+    // ..............................................
+      this.iTemporada = perfil ;
+      this.iDia             = diaTipo ;
+    // .............................................. 
     Object[] fila = new Object[49];
     for (i=0;i<this.nInventario; i++){
              
@@ -6160,8 +6331,41 @@ public void actualizaTablas(int perfil,int diaTipo) {
     jScrollPane9.setViewportView(jTableModeloGeneral);
     
 }
+public void actualizarIndiceInventario(int inventario) {
+    
+    this.iInventario = inventario ;
+}
+public double[] actualizarArrayGrafica() {
+    int j;
+    String str="";
+    double valores[] = new double[48] ;
+          for ( j = 0; j <48; j++)  {
+                                valores[j] = redondear(this.fTablaPotenciasInst[this.iTemporada][this.iInventario][j][this.iDia],2);          // es para cargar los datos en filas a la tabla modelo
+                                str += "  "+valores[j] ;
+           }     
+          System.out.println(" Cargando perfil="+this.iTemporada+" y dia tipo:"+this.iDia+" DATOS --->"+str);
+    return valores;
+}
 // ------------------------------------------------------------------------------------------------------------------------
    public double redondear( double numero, int decimales ) {
     return Math.round(numero*Math.pow(10,decimales))/Math.pow(10,decimales);
   }
+   // ------------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void resultChanged(LookupEvent le) {
+        String strId="";
+        // .............................................................................................
+        Collection<? extends String> allStrings = result.allInstances();
+        StringBuilder sb = new StringBuilder();
+        // .............................................................................................
+        for (String string : allStrings) {
+            sb.append(string).append("\n");
+            System.out.println(" añadiendo string ="+string);
+            strId = string;
+        }
+        // .............................................................................................
+      
+         System.out.println(" Cargando identificador="+strId);
+        logText.setText(sb.toString());
+    }
 }

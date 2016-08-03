@@ -19,10 +19,16 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
+
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.util.PublicCloneable;
 import org.jfree.ui.Drawable;
+
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 
 public class Graficas {
 
@@ -51,11 +57,22 @@ public class Graficas {
 
         //se crea el grafico
         grafico = ChartFactory.createBarChart(data[0], data[1], data[2], dataset, PlotOrientation.VERTICAL, false, false, false);
-
+        
+        // Se ajustan los ejes
+      
+        // get a reference to the plot for further customisation...
+        CategoryPlot plot = (CategoryPlot) grafico.getPlot();
+      
+        // set the range axis to display integers only...
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+    //    rangeAxis.setUpperMargin(1.0);
+        rangeAxis.setUpperBound(1.0);
+        
+        
         //se coloca el grafico en memoria
         _image = grafico.createBufferedImage(this.d.width, this.d.height);
-
-        System.err.println("grafico creado");
+        
 
     }
 

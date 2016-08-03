@@ -22,7 +22,12 @@ import org.openide.util.NbBundle.Messages;
 import conexion.Conexion;
 
 import dao.explorerDao;
+import java.util.Collection;
 import javax.swing.JOptionPane;
+import org.myorg.myapi.acEvent;
+import org.openide.util.Lookup;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
 
 /**
  * Top component which displays something.
@@ -49,6 +54,8 @@ import javax.swing.JOptionPane;
     "HINT_arbolExploradorTopComponent=Arbol explorador"
 })
 public final class arbolExploradorTopComponent extends TopComponent {
+    
+     private InstanceContent content;
     // ..........................................................
     
     public int sup_user    = 0;
@@ -72,6 +79,9 @@ public final class arbolExploradorTopComponent extends TopComponent {
 
     // ..........................................................
     public int id_cliente_general = 0;
+    
+    // ..........................................................
+    public int id_ps = 0;
 
     // ..........................................................
     public arbolExploradorTopComponent() {
@@ -80,10 +90,15 @@ public final class arbolExploradorTopComponent extends TopComponent {
         setToolTipText(Bundle.HINT_arbolExploradorTopComponent());
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
-
+        
+        // .......................................................................................
+        
+        content = new InstanceContent();
+    
+        associateLookup(new AbstractLookup(content));
         crearArbol();
      
-    
+        // .......................................................................................
         //     modificarArbolNuevos() ;
     }
 
@@ -164,7 +179,7 @@ public final class arbolExploradorTopComponent extends TopComponent {
         for (i=0; i<this.nClientes; i++){
                                                                  
                               
-                DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(i+":"+this.listaClientesArbol[i][1]);
+                DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode(this.listaClientesArbol[i][0]+":"+this.listaClientesArbol[i][1]);
                 modelo.insertNodeInto(carpeta, carpetaRaiz, i);   
                
                 id_customer = Integer.valueOf(this.listaClientesArbol[i][0]) ;
@@ -172,7 +187,7 @@ public final class arbolExploradorTopComponent extends TopComponent {
                  
                 for (j=0; j<this.nPuntos; j++){
                     
-                    DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode(j+" -"+this.listaPuntosArbol[j][1]);
+                    DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode(this.listaPuntosArbol[j][0]+" -"+this.listaPuntosArbol[j][1]);
                     modelo.insertNodeInto(carpeta2, carpeta, j);   
                       
                     for (k=0; k<5; k++) {
@@ -187,90 +202,70 @@ public final class arbolExploradorTopComponent extends TopComponent {
                   
              
            }    
+                    // ................................................................................
+        arbol.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+
+            public void valueChanged(TreeSelectionEvent e) {
+                // se obtiene el nodo seleccionado
+                DefaultMutableTreeNode nseleccionado = (DefaultMutableTreeNode) arbol.getLastSelectedPathComponent();
+
+                int nivel = nseleccionado.getDepth();
+                System.out.println("El nivel de campo es =" + nivel);
+
+                
+                if (nivel == 2) {
+
+                    String nodo = nseleccionado.getUserObject().toString();
+                    String[] campos = nodo.split(":");
+                    int indice = Integer.parseInt(campos[0]);
+
+                    System.out.println("El indice de campo es =" + indice);
+                 
+                    id_ps  ++ ;
+                    
+                    // ....................................................
+        
+                    String enteredText = id_ps+":0:"+indice ;
+        
+                    // ....................................................
+        
+                Collection<? extends acEvent> allFilters = Lookup.getDefault().lookupAll(acEvent.class);
+        
+                 StringBuilder sb = new StringBuilder();
+                sb.append(enteredText).append("\n");
+                content.add(enteredText);       System.out.println("Añadiendo indice:"+enteredText);
+                 
+                }
+                
+                if (nivel == 1) {
+
+                    String nodo = nseleccionado.getUserObject().toString();
+                    String[] campos = nodo.split("-");
+                    campos[0]= campos[0].trim();
+                    int indice = Integer.parseInt(campos[0]);
+
+                    System.out.println("El indice de campo es =" + indice);
+                 
+                    id_ps  ++ ;
+                    
+                    // ....................................................
+        
+                    String enteredText = id_ps+":1:"+indice ;
+        
+                    // ....................................................
+        
+                Collection<? extends acEvent> allFilters = Lookup.getDefault().lookupAll(acEvent.class);
+        
+                 StringBuilder sb = new StringBuilder();
+                sb.append(enteredText).append("\n");
+                content.add(enteredText);       System.out.println("Añadiendo indice:"+enteredText);
+                 
+                }
+            }
+        });
             // ................................................................................
-        /**
-         * definimos los eventos
-         */
-        //  arbol.getSelectionModel().addTreeSelectionListener((TreeSelectionListener) this);
-        /**
-         * Definimos mas nodos del arbol y se lo agregamos al modelo
-         */
-        /*
-        DefaultMutableTreeNode carpeta2 = new DefaultMutableTreeNode("San Juan de Alicante");
-        DefaultMutableTreeNode archivo1 = new DefaultMutableTreeNode("Municipio: Alicante");
-        DefaultMutableTreeNode archivo2 = new DefaultMutableTreeNode("Tarifa: 3.0A");
-        DefaultMutableTreeNode archivo3 = new DefaultMutableTreeNode("Superficie: 765 m2");
-
-        DefaultMutableTreeNode carpeta3 = new DefaultMutableTreeNode("CENTRO LOGISTICO");
-        DefaultMutableTreeNode archivo31 = new DefaultMutableTreeNode("Municipio: Jumilla");
-        DefaultMutableTreeNode archivo32 = new DefaultMutableTreeNode("Tarifa: 3.1A");
-        DefaultMutableTreeNode archivo33 = new DefaultMutableTreeNode("Superficie: 20.793 m2");
-
-        DefaultMutableTreeNode carpeta4 = new DefaultMutableTreeNode("Arnau de Vilanova 5");
-        DefaultMutableTreeNode archivo41 = new DefaultMutableTreeNode("Municipio: Sueca");
-        DefaultMutableTreeNode archivo42 = new DefaultMutableTreeNode("Tarifa: 3.0A");
-        DefaultMutableTreeNode archivo43 = new DefaultMutableTreeNode("Superficie: 769 m2");
-
-        DefaultMutableTreeNode carpeta5 = new DefaultMutableTreeNode("Av. Miguel Hernandez 3, BJO-1");
-        DefaultMutableTreeNode archivo51 = new DefaultMutableTreeNode("Municipio: Finestrat");
-        DefaultMutableTreeNode archivo52 = new DefaultMutableTreeNode("Tarifa: 3.0A");
-        DefaultMutableTreeNode archivo53 = new DefaultMutableTreeNode("Superficie: 746 m2");
-
-        DefaultMutableTreeNode carpeta6 = new DefaultMutableTreeNode("Av. Mediterrani, 145 bis");
-        DefaultMutableTreeNode archivo61 = new DefaultMutableTreeNode("Municipio: Petrer");
-        DefaultMutableTreeNode archivo62 = new DefaultMutableTreeNode("Tarifa: 3.1A");
-        DefaultMutableTreeNode archivo63 = new DefaultMutableTreeNode("Superficie: 801 m2");
-
-        DefaultMutableTreeNode carpeta7 = new DefaultMutableTreeNode("C. Paris, 2. 2 esc. B, bajo 1");
-        DefaultMutableTreeNode archivo71 = new DefaultMutableTreeNode("Municipio: Moraira");
-        DefaultMutableTreeNode archivo72 = new DefaultMutableTreeNode("Tarifa: 3.0A");
-        DefaultMutableTreeNode archivo73 = new DefaultMutableTreeNode("Superficie: 746 m2");
-
-        DefaultMutableTreeNode carpeta8 = new DefaultMutableTreeNode("Pais Vaencia, 1");
-        DefaultMutableTreeNode archivo81 = new DefaultMutableTreeNode("Municipio: Alqueria de la Comtessa");
-        DefaultMutableTreeNode archivo82 = new DefaultMutableTreeNode("Tarifa: 3.1A");
-        DefaultMutableTreeNode archivo83 = new DefaultMutableTreeNode("Superficie: 773 m2");
-*/
-        /**
-         * Definimos donde se agrega el nodo, dentro de que rama y que posicion
-         */
-        /*
-        modelo2.insertNodeInto(carpeta2, carpetaRaiz, 0);
-        modelo2.insertNodeInto(carpeta3, carpetaRaiz, 1);
-        modelo2.insertNodeInto(carpeta4, carpetaRaiz, 2);
-        modelo2.insertNodeInto(carpeta5, carpetaRaiz, 3);
-        modelo2.insertNodeInto(carpeta6, carpetaRaiz, 4);
-        modelo2.insertNodeInto(carpeta7, carpetaRaiz, 5);
-        modelo2.insertNodeInto(carpeta8, carpetaRaiz, 6);
-
-        modelo2.insertNodeInto(archivo1, carpeta2, 0);
-        modelo2.insertNodeInto(archivo2, carpeta2, 1);
-        modelo2.insertNodeInto(archivo3, carpeta2, 2);
-
-        modelo2.insertNodeInto(archivo31, carpeta3, 0);
-        modelo2.insertNodeInto(archivo32, carpeta3, 1);
-        modelo2.insertNodeInto(archivo33, carpeta3, 2);
-
-        modelo2.insertNodeInto(archivo41, carpeta4, 0);
-        modelo2.insertNodeInto(archivo42, carpeta4, 1);
-        modelo2.insertNodeInto(archivo43, carpeta4, 2);
-
-        modelo2.insertNodeInto(archivo51, carpeta5, 0);
-        modelo2.insertNodeInto(archivo52, carpeta5, 1);
-        modelo2.insertNodeInto(archivo53, carpeta5, 2);
-
-        modelo2.insertNodeInto(archivo61, carpeta6, 0);
-        modelo2.insertNodeInto(archivo62, carpeta6, 1);
-        modelo2.insertNodeInto(archivo63, carpeta6, 2);
-
-        modelo2.insertNodeInto(archivo71, carpeta7, 0);
-        modelo2.insertNodeInto(archivo72, carpeta7, 1);
-        modelo2.insertNodeInto(archivo73, carpeta7, 2);
-
-        modelo2.insertNodeInto(archivo81, carpeta8, 0);
-        modelo2.insertNodeInto(archivo82, carpeta8, 1);
-        modelo2.insertNodeInto(archivo83, carpeta8, 2);
-*/
+      
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -301,25 +296,7 @@ public final class arbolExploradorTopComponent extends TopComponent {
         DefaultMutableTreeNode carpeta = new DefaultMutableTreeNode("CARGADOS (" + this.nPuntos + ")");     // Comenzamos con el primer punto
         modelo2.insertNodeInto(carpeta, carpetaRaiz, 0);
 
-        /*
-            for (i=0; i<this.nPuntos; i++){
-               CUPS = this.listaPuntosSum[i][2] ;                                                           // Insertamos primero el cups
-               CUPS = CUPS.trim();
-               nCUPS = CUPS.length();
-
-               if ( nCUPS>0){
-                    DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(i+" "+this.listaPuntosSum[i][2]);
-                    modelo2.insertNodeInto(archivo, carpeta, i);
-               } else {
-
-
-                        DefaultMutableTreeNode archivo = new DefaultMutableTreeNode(i+" -");
-                        modelo2.insertNodeInto(archivo, carpeta, i);
-
-              }
-           }
-         */
-        // ................................................................................
+                // ................................................................................
         arbol.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
 
@@ -338,6 +315,22 @@ public final class arbolExploradorTopComponent extends TopComponent {
 
                     System.out.println("El indice de campo es =" + indice);
                     // actualizarFormularios(indice);
+                    
+                    // ....................................................
+        
+                 String enteredText = " Nodo_0"+indice ;
+        
+                // ....................................................
+        
+                Collection<? extends acEvent> allFilters = Lookup.getDefault().lookupAll(acEvent.class);
+        
+                 StringBuilder sb = new StringBuilder();
+        
+                  for (acEvent textFilter : allFilters) {
+                         String processedText = textFilter.process(enteredText);
+                         sb.append(processedText).append("\n");
+                        content.add(enteredText);
+                  }
 
                 }
             }
